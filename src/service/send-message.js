@@ -1,0 +1,46 @@
+const AWS = require("aws-sdk");
+const ddb = new AWS.DynamoDB.DocumentClient();
+
+const sendmsg = async (event, context) => {
+  let connections;
+  try {
+    connections = await ddb.scan({ TableName: process.env.table }).promise();
+  } catch (err) {
+    return {
+      statusCode: 500,
+    };
+  }
+  const callbackAPI = new AWS.ApiGatewayManagementApi({
+    apiVersion: "",
+    endpoint:
+      event.requestContext.domainName + "/" + event.requestContext.stage,
+  });
+
+  const message = JSON.parse(event.body).message;
+
+  const sendMessages = connections.Items.map(async ({ connectionId }) => {
+    if (connectionId !== event.requestContext.connectionId) {
+      try {
+        await callbackAPI
+          .postToConnection({ ConnectionId: connectionId, Data: message })
+          .promise();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+
+  try {
+    await Promise.all(sendMessages);
+  } catch (e) {
+    console.log(e);
+    return {
+      statusCode: 500,
+    };
+  }
+
+  return { statusCode: 200 };
+};
+module.exports = {
+  sendmsg,
+};
