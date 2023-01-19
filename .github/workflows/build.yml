@@ -17,5 +17,5 @@ jobs:
           path: reports/jest-junit.xml
           reporter: jest-junit
       - name: Docker status on failure
-        run: docker-compose ps && docker-compose logs -t
+        run: docker compose ps && docker compose logs -t
         if: failure()
