@@ -1,12 +1,10 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+
+name: Docker Compose Actions Workflow
+on: push
 jobs:
-  check-bats-version:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: npm ci
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
