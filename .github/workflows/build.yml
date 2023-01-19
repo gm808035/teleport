@@ -11,8 +11,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install -g 
-      - run: apt-get install docker-compose-plugin
+      - run: npm ci
+      - run: sudo npm install -g 
       - name: Build the task
         run: docker-compose up -d
      
