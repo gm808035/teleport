@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm i -g jest
       - name: Build the stack
         run: docker compose up -d --build
       - name: Test Report
