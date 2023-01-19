@@ -10,5 +10,3 @@ jobs:
         with:
           node-version: '14'
       - run: npm ci
-      - name: Build the stack
-        run: docker-compose up -d
