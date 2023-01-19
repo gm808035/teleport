@@ -16,6 +16,11 @@
     "wscat": "^5.2.0"
   },
   "devDependencies": {
-    "serverless-offline": "^9.0.0"
+    "jest": "^29.3.1",
+    "serverless-offline": "^9.0.0",
+    "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
