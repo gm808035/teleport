@@ -9,5 +9,5 @@ jobs:
       - name: Build the stack
         run: docker compose up -d --build
       - name: Test Report
-        run: npm test -- --updateSnapshot
+        run: npm run test
       
