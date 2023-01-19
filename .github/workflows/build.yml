@@ -8,3 +8,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker compose up -d --build
+      - name: Test Report
+        run: npm run test -- --runInBand
