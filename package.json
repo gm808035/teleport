@@ -23,7 +23,6 @@
   },
   "scripts": {
     "start": "sls offline",
-    "lint": "eslint .",
-    "test": "jest --ci"
+    "lint": "eslint ."
   }
 }
