@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: '14'
       - run: npm install -g 
+      - run: apt-get install docker-compose-plugin
       - name: Build the task
         run: docker-compose up -d
      
