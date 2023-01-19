@@ -10,6 +10,15 @@ jobs:
       - run: npm i -g jest
       - name: Build the stack
         run: docker compose up -d --build
+      - run: npm run test -- --runInBand
       - name: Test Report
-        run: npm run test
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: test-results
+          path: reports/jest-junit.xml
+          reporter: jest-junit
+      - name: Docker status on failure
+        run: docker compose ps && docker compose logs -t
+        if: failure()
       
