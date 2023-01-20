@@ -18,30 +18,30 @@ services:
       - ./db:/docker-entrypoint-initdb.d/
     ports:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
       - "5432:5432"
-  # api:
-  #   container_name: api
-  #   build: .
-  #   tty: true
-  #   ports:
-  #     - "3000:3000"
-  #     - "3002:3002"
-  #   environment:
-  #     LOG_LEVEL: debug
-  #     DB_HOST: postgres_db
-  #     DB_READER_HOST: postgres_db
-  #     DB_DATABASE: teleport
-  #     DB_USERNAME: wildmint
-  #     DB_PASSWORD: pass
-  #     DEBUG: "sequelize:*"
-  #   volumes:
-  #     - ./:/home/node/app:cached
-  #   command: sh -c 'yarn sls config credentials --overwrite --provider aws --key KEY --secret SECRET &&
-  #     npm start'
-  #   healthcheck:
-  #     test: curl --fail http://localhost:3000/production/pong || exit 1
-  #     interval: 15s
-  #     timeout: 2s
-  #     retries: 10
-  #   depends_on:
-  #     postgres_db:
-  #       condition: service_healthy
+  api:
+    container_name: api
+    build: .
+    tty: true
+    ports:
+      - "3000:3000"
+      - "3002:3002"
+    environment:
+      LOG_LEVEL: debug
+      DB_HOST: postgres_db
+      DB_READER_HOST: postgres_db
+      DB_DATABASE: teleport
+      DB_USERNAME: wildmint
+      DB_PASSWORD: pass
+      DEBUG: "sequelize:*"
+    volumes:
+      - ./:/home/node/app:cached
+    command: sh -c 'yarn sls config credentials --overwrite --provider aws --key KEY --secret SECRET &&
+      npm start'
+    healthcheck:
+      test: curl --fail http://localhost:3000/production/pong || exit 1
+      interval: 15s
+      timeout: 2s
+      retries: 10
+    depends_on:
+      postgres_db:
+        condition: service_healthy
