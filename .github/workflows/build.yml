@@ -8,6 +8,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm ci
       - run: npm i -g jest
+      - run: npm i -g serverless-offline
       - name: Build the stack
         run: docker compose up -d --build
       - name: Run serverless-offline
