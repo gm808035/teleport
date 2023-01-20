@@ -2,43 +2,26 @@
 name: Teleport build
 on: push
 jobs:
-  container-job:
-   runs-on: ubuntu-latest
-   container: node:14
-
-   services:
-      # Label used to access the service container
-    postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: pass
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-   steps:
-      # Downloads a copy of the code in your repository before running CI tests
-      - name: Check out repository code
-        uses: actions/checkout@v3
-
-      # Performs a clean installation of all dependencies in the `package.json` file
-      # For more information, see https://docs.npmjs.com/cli/ci.html
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
-        run: node client.js
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-     
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm i -g jest
+      - name: Build the stack
+        run: docker compose up -d --build
+      - name: Run serverless-offline
+        run: sls offline
+      - name: Running tests
+        run: npm run test -- --runInBand
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: test-results
+          path: reports/jest-junit.xml
+          reporter: jest-junit
+      - name: Docker status on failure
+        run: docker compose ps && docker compose logs -t
+        if: failure()
       

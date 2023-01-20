@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="2" failures="0" errors="0" time="0.864">
-  <testsuite name="tests/user.test.js" errors="0" failures="0" skipped="0" timestamp="2023-01-19T14:38:11" time="0.838" tests="2">
-    <testcase classname="POST /user" name="when getting venues then return 200" time="0.382">
+<testsuites name="jest tests" tests="2" failures="1" errors="0" time="0.301">
+  <testsuite name="tests/user.test.js" errors="0" failures="1" skipped="1" timestamp="2023-01-19T16:16:40" time="0.267" tests="2">
+    <testcase classname="POST /user" name="when getting venues then return 200" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="GET /user/{id}" name="when getting venues then return 200" time="0.267">
+    <testcase classname="GET /user/{id}" name="when getting venues then return 200" time="0.053">
+      <failure>Error: socket hang up
+    at connResetException (node:internal/errors:711:14)
+    at Socket.socketOnEnd (node:_http_client:514:23)
+    at Socket.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)</failure>
     </testcase>
   </testsuite>
 </testsuites>
