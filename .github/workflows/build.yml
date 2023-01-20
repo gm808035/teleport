@@ -11,10 +11,8 @@ jobs:
       - run: npm i -g serverless-offline
       - name: Build the stack
         run: docker compose up -d --build
-      - name: Run serverless-offline
-        run: sls offline
       - name: Running tests
-        run: npm run test -- --runInBand
+        run: npm test -- --runInBand
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()
